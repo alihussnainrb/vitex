@@ -3,10 +3,11 @@
 
 
 export default function Page() {
+    console.log("Hello from index");
     return (
-        <div style={{ width: "500px", height: "500px", background: "red" }}>
+        <h1>
             Hello from Index page
-        </div>
+        </h1>
     )
 }
 
