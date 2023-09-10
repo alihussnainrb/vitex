@@ -2,15 +2,19 @@
 
 ## How to use
 
-### Create new repositry directly by using use template [https://github.com/new?template_name=vitex&template_owner=alihussnainrb] button
+Create new repositry from above use this template button or [click here](https://github.com/new?template_name=vitex&template_owner=alihussnainrb) to create new repo.
 
-OR
+### OR
 
-### Install Degit (learn more[https://github.com/Rich-Harris/degit])
+Clone repo using git
 
-### Install
+```base
+   git clone 'https://github.com/alihussnainrb/vitex.git'
+```
 
-degit user/repo my-new-project
+### If you want to clone it non git environment or don't have git installed
+
+You can checkout [degit](https://github.com/Rich-Harris/degit)
 
 ## Creating new page
 
