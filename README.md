@@ -4,7 +4,7 @@
 
 Create new repositry from above use this template button or [click here](https://github.com/new?template_name=vitex&template_owner=alihussnainrb) to create new repo.
 
-### OR
+##### OR
 
 Clone repo using git
 
@@ -12,7 +12,7 @@ Clone repo using git
    git clone 'https://github.com/alihussnainrb/vitex.git'
 ```
 
-### If you want to clone it non git environment or don't have git installed
+##### If you don't have git installed
 
 You can checkout [degit](https://github.com/Rich-Harris/degit)
 
