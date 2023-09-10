@@ -1,3 +1,4 @@
+import fsBase from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
@@ -63,8 +64,10 @@ yargs(hideBin(process.argv))
                     default: "new-page"
                 })
         }, (argv) => {
-            console.info(`created page ${argv.page}`)
             const filepath = path.join(process.cwd(), "src/pages", `${argv.page}.tsx`)
+            if (!fsBase.existsSync(filepath)) {
+                fsBase.mkdirSync(filepath, { recursive: true })
+            }
             fs.writeFile(filepath, newPageContent, { encoding: "utf-8" })
         })
     .parse()
