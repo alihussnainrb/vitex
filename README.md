@@ -8,8 +8,8 @@ Create new repositry from above use this template button or [click here](https:/
 
 Clone repo using git
 
-```base
-   git clone 'https://github.com/alihussnainrb/vitex.git'
+```bash
+git clone 'https://github.com/alihussnainrb/vitex.git'
 ```
 
 ##### If you don't have git installed
