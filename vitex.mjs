@@ -1,5 +1,4 @@
-import fsBase from 'node:fs'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import path from 'node:path'
 
 
@@ -9,7 +8,7 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 
-const newPageContent = `
+const newStaticPageContent = `
 import { createTypedLoader, useLoaderData } from "@/lib/loader.utils";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
@@ -64,10 +63,17 @@ yargs(hideBin(process.argv))
                     default: "new-page"
                 })
         }, (argv) => {
-            const filepath = path.join(process.cwd(), "src/pages", `${argv.page}.tsx`)
-            if (!fsBase.existsSync(filepath)) {
-                fsBase.mkdirSync(filepath, { recursive: true })
+            let filepath = path.join(process.cwd(), "src/pages", `${argv.page}.tsx`)
+            if (fs.existsSync(filepath)) {
+                return console.error("Could not create, a page already exist at path", argv.page)
             }
-            fs.writeFile(filepath, newPageContent, { encoding: "utf-8" })
+            if (argv.page.split("/").length > 0) {
+                const filedir = filepath.substring(0, filepath.lastIndexOf('/'))
+                if (!fs.existsSync(filedir)) {
+                    fs.mkdirSync(filedir, { recursive: true })
+                }
+            }
+            fs.writeFileSync(filepath, newStaticPageContent, { encoding: "utf-8" })
+            console.log("New page created", argv.page)
         })
     .parse()
