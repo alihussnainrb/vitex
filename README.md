@@ -23,3 +23,12 @@ node vite.mjs create [Page Name]
 ```js
    node vite.mjs create hello
 ```
+
+## Creating dynamic page
+
+Creating dynamic pages are same as above but page name starts with $ i.e /posts/postId will be posts/$id.
+node vite.mjs create [$Page Name]
+
+```js
+   node vite.mjs create posts/$id
+```
