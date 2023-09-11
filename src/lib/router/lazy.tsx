@@ -16,7 +16,7 @@ export type PageRoute = {
 
 
 const pages = import.meta.glob(
-  "./pages/**/*.{tsx,jsx}",
+  "./pages/**/*.tsx",
   { eager: false }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) as Record<string, () => any>
@@ -27,6 +27,11 @@ const routes: PageRoute[] = [];
 for (const path of Object.keys(pages)) {
   const fileName = path.match(/\.\/pages\/(.*)\.tsx$/)?.[1];
   if (!fileName) {
+    continue;
+  }
+
+  const exactFilename = fileName.substring(fileName.lastIndexOf("/"))
+  if (exactFilename.startsWith("_") || exactFilename === "layout") {
     continue;
   }
 

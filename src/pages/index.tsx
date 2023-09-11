@@ -1,14 +1,11 @@
-import { createTypedLoader, useLoaderData } from "@/lib/loader.utils";
+import { createDataLoader, useLoaderData } from "@/lib/loader.utils";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
 
 
-type LoaderData = {
-    hello: string;
-}
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const loader = createTypedLoader<LoaderData>(() => {
+export const loader = createDataLoader(async () => {
     return {
         hello: "World"
     }

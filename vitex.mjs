@@ -9,17 +9,14 @@ import { hideBin } from 'yargs/helpers'
 
 
 const newStaticPageContent = `
-import { createTypedLoader, useLoaderData } from "@/lib/loader.utils";
+import { createDataLoader, useLoaderData } from "@/lib/loader.utils";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
 
 
-type LoaderData = {
-    hello: string;
-}
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const loader = createTypedLoader<LoaderData>(() => {
+export const loader = createDataLoader(async () => {
     return {
         hello: "World"
     }
@@ -67,7 +64,7 @@ yargs(hideBin(process.argv))
             if (fs.existsSync(filepath)) {
                 return console.error("Could not create, a page already exist at path", argv.page)
             }
-            if (argv.page.split("/").length > 0) {
+            if (argv.page.split("/").length > 1) {
                 const filedir = filepath.substring(0, filepath.lastIndexOf('/'))
                 if (!fs.existsSync(filedir)) {
                     fs.mkdirSync(filedir, { recursive: true })

@@ -6,16 +6,19 @@ import {
 } from "react-router-dom";
 
 export function useLoaderData<
-  TLoader extends ReturnType<typeof createTypedLoader>
+  TLoader extends ReturnType<typeof createDataLoader>
 >() {
-  return useRrdLoaderData() as ReturnType<TLoader>["data"];
+  return useRrdLoaderData() as Awaited<ReturnType<TLoader>>["data"];
 }
 
-export function createTypedLoader<TData extends Record<string, unknown>>(
-  dataFunc: (args: LoaderFunctionArgs) => TData
+export function createDataLoader<TData extends Record<string, unknown>>(
+  dataFunc: (args: LoaderFunctionArgs) => Promise<TData> | TData
 ) {
-  return (args: LoaderFunctionArgs) =>
-    defer(dataFunc(args)) as Omit<ReturnType<typeof defer>, "data"> & {
+  return async (args: LoaderFunctionArgs) =>
+    defer(await dataFunc(args)) as Omit<
+      Awaited<ReturnType<typeof defer>>,
+      "data"
+    > & {
       data: TData;
     };
 }
