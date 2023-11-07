@@ -1,10 +1,6 @@
 import { ReactNode } from "react";
 import { LoaderFunction, createBrowserRouter } from "react-router-dom";
 
-
-
-
-
 export type PageRoute = {
   path: string;
   LoadPageContent: () => Promise<{
@@ -12,16 +8,13 @@ export type PageRoute = {
     ErrorBoundary?: () => ReactNode;
     loader?: LoaderFunction;
   }>;
-}
-
+};
 
 const pages = import.meta.glob(
-  "./pages/**/*.tsx",
+  "../../pages/**/*.{tsx,jsx}",
   { eager: false }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) as Record<string, () => any>
-
-
+) as Record<string, () => any>;
 
 const routes: PageRoute[] = [];
 for (const path of Object.keys(pages)) {
@@ -30,7 +23,7 @@ for (const path of Object.keys(pages)) {
     continue;
   }
 
-  const exactFilename = fileName.substring(fileName.lastIndexOf("/"))
+  const exactFilename = fileName.substring(fileName.lastIndexOf("/"));
   if (exactFilename.startsWith("_") || exactFilename === "layout") {
     continue;
   }
@@ -40,24 +33,26 @@ for (const path of Object.keys(pages)) {
     : fileName.replace(/\/index/, "");
 
   routes.push({
-    path: (fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`),
+    path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
     LoadPageContent: pages[path],
   });
 }
-
-
 
 const router = createBrowserRouter(
   routes.map(({ path, LoadPageContent }) => ({
     path: path,
     lazy: async () => {
-      const { default: PageContent, ErrorBoundary, loader } = (await LoadPageContent())
+      const {
+        default: PageContent,
+        ErrorBoundary,
+        loader,
+      } = await LoadPageContent();
       return {
         element: <PageContent />,
         ...(ErrorBoundary && { errorElement: <ErrorBoundary /> }),
         loader,
-      }
-    }
+      };
+    },
   }))
 );
 
