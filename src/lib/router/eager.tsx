@@ -14,7 +14,7 @@ export type PageRoute = {
 
 
 const pages = import.meta.glob(
-  "./pages/**/*.{tsx,jsx}",
+  "../../pages/**/*.{tsx,jsx}",
   { eager: true }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) as Record<string, any>
